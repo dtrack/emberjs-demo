@@ -10,18 +10,18 @@ Demo.Site = Em.Object.extend({
 
 
 Demo.demoController = Em.ArrayProxy.create({
-    working: false,
+    isWorking: false,
     content: [],
     isError: false,
     increment: 1,
     currentSite: undefined,
     triggerError: function () {
         var self = this;
-        self.set('working', true);
+        self.set('isWorking', true);
         // faking roundtrip to server
         setTimeout(function () {
             self.set('isError', true);
-            self.set('working', false);
+            self.set('isWorking', false);
         }, 1000);
     },
     updateCurrentSite: function () {
@@ -38,14 +38,14 @@ Demo.demoController = Em.ArrayProxy.create({
     },
     addMany: function() {
         var self=this;
-        self.set('working', true);
+        self.set('isWorking', true);
         // faking roundtrip to server
         setTimeout(function () {
             for (i=0; i<5; i++) {
             self.addSite('http://some-site' + self.get('increment') + '.com',
                 'Some Site #' + self.get('increment'), self.get('increment'));
             }
-            self.set('working', false);
+            self.set('isWorking', false);
         }, 1000);
     },
     addSite: function(url, name, id) {
@@ -114,10 +114,9 @@ Demo.siteListItemView = Em.View.extend({
 });
 
 Demo.workingSpinnerView = Em.View.extend({
-    workingBinding: 'Demo.demoController.working',
     src: 'spinner.gif',
 
-    classNameBindings: ['Demo.demoController.working:working']
+    classNameBindings: ['Demo.demoController.isWorking:working']
 });
 
 Demo.errorView = Em.View.extend({
