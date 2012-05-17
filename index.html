@@ -72,7 +72,7 @@
         {{#each Demo.demoController}}
             {{#view Demo.siteListItemView id="site-list-item" contentBinding="this"
               valueBinding="this.id"}}
-            <a href="#site-details" 
+            <a href="#site-details-view" 
                 {{action "changeCurrentSite" idSiteBinding="content.id"}}
                 rel="{{content.id}}">{{content.name}}</a>
             {{/view}}
