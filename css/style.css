@@ -133,8 +133,12 @@ h2 {
     margin: 20px 0;
 }
 
-.current-site-unset {
+#site-details-view {
     display: none;
+}
+
+#site-details-view.current-site-set {
+    display: block;
 }
 
 

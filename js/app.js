@@ -67,11 +67,11 @@ Demo.demoController = Em.ArrayProxy.create({
     longestUrlLength: function () {
         return this.computeMax('url');
     }.property('@each.url'),
-    currentSiteUnSet: function() {
+    currentSiteSet: function() {
         if (this.get('currentSite') === undefined) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }.property('currentSite')
 });
 
@@ -85,7 +85,10 @@ Demo.siteDetailsView = Em.View.extend({
     nameBinding: 'Demo.demoController.currentSite.name',
     urlBinding: 'Demo.demoController.currentSite.url',
     visitsBinding: 'Demo.demoController.currentSite.visits',
-    siteUnSetBinding: 'Demo.demoController.currentSiteUnSet'
+
+    //binding class to view that will only be set when "SiteUnSet is true"
+    classNameBindings:
+        ["Demo.demoController.currentSiteSet:current-site-set"]
 });
 
 
@@ -98,7 +101,7 @@ Demo.siteListItemView = Em.View.extend({
 });
 
 Demo.errorView = Em.View.extend({
-    isErrorBinding: 'Demo.demoController.isError'
+    classNameBindings: ['Demo.demoController.isError:error']
 });
 
 //Let's add two site to start with
