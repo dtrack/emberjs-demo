@@ -10,12 +10,19 @@ Demo.Site = Em.Object.extend({
 
 
 Demo.demoController = Em.ArrayProxy.create({
+    working: false,
     content: [],
     isError: false,
     increment: 1,
     currentSite: undefined,
     triggerError: function () {
-        this.set('isError', true);
+        var self = this;
+        self.set('working', true);
+        // faking roundtrip to server
+        setTimeout(function () {
+            self.set('isError', true);
+            self.set('working', false);
+        }, 1000);
     },
     updateCurrentSite: function () {
         this.set('currentSite', this.findProperty('id', id));
@@ -30,10 +37,16 @@ Demo.demoController = Em.ArrayProxy.create({
             'One Site #' + this.get('increment'), this.get('increment'));
     },
     addMany: function() {
-        for (i=0; i<5; i++) {
-            this.addSite('http://some-site' + this.get('increment') + '.com',
-                'Some Site #' + this.get('increment'), this.get('increment'));
-        }
+        var self=this;
+        self.set('working', true);
+        // faking roundtrip to server
+        setTimeout(function () {
+            for (i=0; i<5; i++) {
+            self.addSite('http://some-site' + self.get('increment') + '.com',
+                'Some Site #' + self.get('increment'), self.get('increment'));
+            }
+            self.set('working', false);
+        }, 1000);
     },
     addSite: function(url, name, id) {
         var site = Demo.Site.create({
@@ -98,6 +111,13 @@ Demo.siteListItemView = Em.View.extend({
         Demo.demoController.updateCurrentSite(id);
         this.siteSet = true;
     }
+});
+
+Demo.workingSpinnerView = Em.View.extend({
+    workingBinding: 'Demo.demoController.working',
+    src: 'spinner.gif',
+
+    classNameBindings: ['Demo.demoController.working:working']
 });
 
 Demo.errorView = Em.View.extend({

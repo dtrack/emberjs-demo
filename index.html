@@ -36,7 +36,9 @@
     {{#view Em.Button target="Demo.demoController" action="triggerError"}}
         Fake Error
     {{/view}}
-    <img src="spinner.gif" style="display: none;">
+    {{#view Demo.workingSpinnerView content=this id="spinner"}}
+        <img {{bindAttr src="src"}}>
+    {{/view}}
 </div>
 {{#view Demo.summaryView id="summary-view" content=this }}
     <h2>Site Summary</h2>

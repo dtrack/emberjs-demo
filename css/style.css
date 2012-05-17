@@ -141,6 +141,13 @@ h2 {
     display: block;
 }
 
+#spinner {
+    display: none;
+}
+
+#spinner.working {
+    display: inline;
+}
 
 
 
